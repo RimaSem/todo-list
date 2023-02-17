@@ -1,8 +1,54 @@
 .menu {
-  //   width: 250px;
   height: 80px;
-  padding: 1.5em;
+  padding: 1rem;
   background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+
+  .hamburger-menu {
+    height: 50px;
+    width: 50px;
+    position: relative;
+    cursor: pointer;
+    padding: 1rem;
+
+    .ham-bar {
+      z-index: 1;
+      width: 70%;
+      height: 4px;
+      background-color: rgb(72, 72, 72);
+      border-radius: 25px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.6s, opacity 0.1s, top 0.6s;
+    }
+
+    .bar-top {
+      top: 25%;
+    }
+
+    .bar-bottom {
+      top: 75%;
+    }
+  }
+
+  .hamburger-menu.active {
+    .bar-top {
+      transform: translate(-50%, -50%) rotate(-315deg);
+      top: 50%;
+    }
+
+    .bar-mid {
+      opacity: 0;
+    }
+
+    .bar-bottom {
+      transform: translate(-50%, -50%) rotate(-225deg);
+      top: 50%;
+    }
+  }
 }
 
 @media screen and (min-width: 1000px) {
