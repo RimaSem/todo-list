@@ -1,0 +1,15 @@
+.menu {
+  //   width: 250px;
+  height: 80px;
+  padding: 1.5em;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+@media screen and (min-width: 1000px) {
+  .menu {
+    height: auto;
+    width: 250px;
+    border-top-left-radius: 2em;
+    border-bottom-left-radius: 2em;
+  }
+}

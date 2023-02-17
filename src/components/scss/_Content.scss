@@ -1,0 +1,11 @@
+.content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.212);
+}
+
+@media screen and (min-width: 1000px) {
+  .content {
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
+  }
+}
