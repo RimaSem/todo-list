@@ -35,6 +35,16 @@ body {
   }
 }
 
+@media screen and (min-width: 800px) {
+  body {
+    #root {
+      .App {
+        flex-direction: row;
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 1000px) {
   body {
     #root {
