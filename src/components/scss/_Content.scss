@@ -1,3 +1,5 @@
+@import "./Todo";
+
 .content {
   flex: 1;
 
@@ -17,6 +19,7 @@
       border: none;
       font-size: 1.03rem;
       border-radius: 14px;
+      cursor: pointer;
     }
 
     .new-task-btn {

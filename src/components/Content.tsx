@@ -1,5 +1,6 @@
 import Icon from "@mdi/react";
 import { mdiPlus } from "@mdi/js";
+import Todo from "./Todo";
 
 function Content() {
   return (
@@ -10,6 +11,9 @@ function Content() {
           <Icon path={mdiPlus} size={0.8} /> Create Todo
         </button>
       </div>
+      <Todo />
+      <Todo />
+      <Todo />
     </div>
   );
 }
