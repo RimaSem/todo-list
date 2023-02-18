@@ -1,0 +1,40 @@
+.general-nav {
+  margin-top: 2em;
+
+  .nav-item {
+    padding: 0.35em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 1.4rem;
+    cursor: pointer;
+
+    .nav-icon {
+      width: 1.6em;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.352);
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .general-nav {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+
+    .nav-item {
+      font-size: 1.2rem;
+      padding: 0.3em;
+      padding-left: 1em;
+
+      .nav-icon {
+        width: 1.2em;
+      }
+    }
+  }
+}

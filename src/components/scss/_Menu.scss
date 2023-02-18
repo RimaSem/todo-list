@@ -1,3 +1,6 @@
+@import "./GeneralNav";
+@import "./ListNav";
+
 .off-screen-menu {
   position: fixed;
   top: 80px;
@@ -68,6 +71,10 @@
     font-family: "Cabin Sketch", cursive;
     font-size: 3rem;
   }
+
+  .sidebar-menu {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 310px) {
@@ -80,12 +87,29 @@
 
 @media screen and (min-width: 800px) {
   .header {
+    padding: 0;
     width: 250px;
     height: auto;
     align-items: flex-start;
+    flex-direction: column;
+    align-items: stretch;
 
     .hamburger-menu {
       display: none;
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .header {
+    .menu-title {
+      margin-top: 0.2em;
+      margin-left: 0.3em;
     }
   }
 }
@@ -94,9 +118,10 @@
   .header {
     border-top-left-radius: 2em;
     border-bottom-left-radius: 2em;
+    padding: 1.7em 0;
 
     .menu-title {
-      font-size: 2rem;
+      font-size: 2.7rem;
       margin: 0 auto;
     }
   }

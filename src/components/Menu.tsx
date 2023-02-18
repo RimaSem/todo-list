@@ -1,4 +1,6 @@
 import { useRef } from "react";
+import GeneralNav from "./GeneralNav";
+import ListNav from "./ListNav";
 
 function Menu() {
   const hamburgerMenuRef = useRef<HTMLDivElement>(null);
@@ -12,7 +14,10 @@ function Menu() {
 
   return (
     <>
-      <div ref={slidingMenuRef} className="off-screen-menu"></div>
+      <div ref={slidingMenuRef} className="off-screen-menu">
+        <GeneralNav />
+        <ListNav />
+      </div>
       <div className="header">
         <div
           ref={hamburgerMenuRef}
@@ -24,6 +29,10 @@ function Menu() {
           <div className="ham-bar bar-bottom"></div>
         </div>
         <div className="menu-title">Todo List</div>
+        <div className="sidebar-menu">
+          <GeneralNav />
+          <ListNav />
+        </div>
       </div>
     </>
   );
