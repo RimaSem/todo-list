@@ -12,8 +12,6 @@ function Content() {
         </button>
       </div>
       <Todo />
-      <Todo />
-      <Todo />
     </div>
   );
 }

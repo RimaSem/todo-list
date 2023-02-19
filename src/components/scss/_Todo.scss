@@ -48,6 +48,20 @@
       }
     }
   }
+
+  .todo-details {
+    padding-bottom: 0.5em;
+    border-top: 1px solid rgba(0, 0, 0, 0.199);
+    p {
+      margin: 0;
+      padding-top: 0.4em;
+      margin: 0 0.5em;
+
+      span {
+        font-weight: 600;
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 800px) {
@@ -67,6 +81,17 @@
         .todo-edit-btn,
         .todo-delete-btn {
           width: 1.15em;
+        }
+      }
+    }
+    .todo-details {
+      padding-top: 0.5em;
+      p {
+        font-size: 0.88rem;
+        padding: 0.2em;
+
+        span {
+          font-weight: 600;
         }
       }
     }
