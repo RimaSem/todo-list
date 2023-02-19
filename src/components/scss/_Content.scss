@@ -22,9 +22,20 @@
       cursor: pointer;
     }
 
+    .sort-btn {
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
     .new-task-btn {
       display: flex;
       align-items: center;
+      transition: transform 300ms;
+
+      &:hover {
+        transform: scale(1.05);
+      }
     }
   }
 }

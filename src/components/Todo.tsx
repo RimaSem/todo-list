@@ -5,7 +5,6 @@ import { mdiPencil, mdiTrashCanOutline } from "@mdi/js";
 function Todo() {
   const [showDetails, setShowDetails] = useState(false);
   const todoRef = useRef<HTMLDivElement | null>(null);
-  const checkboxRef = useRef<HTMLInputElement | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
@@ -15,27 +14,21 @@ function Todo() {
     }
   }
 
-  function todoDetails(e: React.MouseEvent<HTMLDivElement>) {
-    if (e.target !== checkboxRef.current) {
-      setShowDetails((prev) => !prev);
-    }
-  }
-
   return (
     <div
       ref={todoRef}
-      className="todo-container completed"
-      onClick={todoDetails}
+      className="todo-container"
+      onClick={() => setShowDetails((prev) => !prev)}
     >
       <div className="todo-main-row">
         <input
-          ref={checkboxRef}
           onChange={handleChange}
+          onClick={(e) => e.stopPropagation()}
           className="todo-checkbox"
           type="checkbox"
         />
         <span className="todo-title">Walk the dog</span>
-        <div className="todo-btns">
+        <div className="todo-btns" onClick={(e) => e.stopPropagation()}>
           <Icon className="todo-edit-btn" path={mdiPencil} />
           <Icon className="todo-delete-btn" path={mdiTrashCanOutline} />
         </div>

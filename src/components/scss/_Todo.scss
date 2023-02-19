@@ -3,6 +3,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 0.7em;
   cursor: pointer;
+  border-left: 6px solid rgba(255, 0, 0, 0.745);
 
   .todo-main-row {
     display: flex;
@@ -14,7 +15,6 @@
       transform: scale(1.7);
       margin-right: 0.8em;
       accent-color: #f9e8ffd5;
-      z-index: 5;
     }
 
     .todo-title {

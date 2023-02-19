@@ -1,15 +1,19 @@
 @import "./GeneralNav";
 @import "./ListNav";
+@import "./NewListForm";
 
 .off-screen-menu {
   position: fixed;
   top: 80px;
   left: -75%;
+  bottom: 0;
   background-color: rgb(191, 216, 237);
-  height: 100vh;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
   width: 75%;
   transition: left 0.5s;
   z-index: 1;
+  padding-bottom: 2em;
 }
 
 .off-screen-menu.active {
@@ -75,6 +79,7 @@
 
   .sidebar-menu {
     display: none;
+    position: relative;
   }
 }
 
