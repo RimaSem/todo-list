@@ -4,16 +4,36 @@ import { mdiPencil, mdiTrashCanOutline } from "@mdi/js";
 
 function Todo() {
   const [showDetails, setShowDetails] = useState(false);
+  const todoRef = useRef<HTMLDivElement | null>(null);
+  const checkboxRef = useRef<HTMLInputElement | null>(null);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      todoRef.current?.classList.add("completed");
+    } else {
+      todoRef.current?.classList.remove("completed");
+    }
+  }
+
+  function todoDetails(e: React.MouseEvent<HTMLDivElement>) {
+    if (e.target !== checkboxRef.current) {
+      setShowDetails((prev) => !prev);
+    }
+  }
 
   return (
     <div
-      className="todo-container"
-      onClick={() => {
-        setShowDetails((prev) => !prev);
-      }}
+      ref={todoRef}
+      className="todo-container completed"
+      onClick={todoDetails}
     >
       <div className="todo-main-row">
-        <input className="todo-checkbox" type="checkbox" />
+        <input
+          ref={checkboxRef}
+          onChange={handleChange}
+          className="todo-checkbox"
+          type="checkbox"
+        />
         <span className="todo-title">Walk the dog</span>
         <div className="todo-btns">
           <Icon className="todo-edit-btn" path={mdiPencil} />
