@@ -1,0 +1,150 @@
+.task-form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  backdrop-filter: blur(2rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    gap: 1em;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    .task-form-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5em;
+
+      h3 {
+        margin: 0;
+      }
+
+      .close-btn {
+        width: 0.6em;
+        font-size: 3rem;
+        cursor: pointer;
+        color: rgb(58, 58, 58);
+
+        &:hover {
+          color: rgba(255, 0, 0, 0.516);
+        }
+      }
+    }
+
+    .task-form-body {
+      display: flex;
+      flex-direction: column;
+      padding: 0 1.8em 1.8em 1.8em;
+
+      label {
+        font-size: 1.1rem;
+        font-weight: 400;
+      }
+
+      input,
+      textarea,
+      select,
+      option {
+        border: rgba(0, 0, 0, 0.3);
+        height: 2em;
+        font-size: 1.1rem;
+        padding: 0em 0.5em;
+        margin-bottom: 0.8em;
+        border-radius: 5px;
+        border: 2px solid rgba(0, 0, 0, 0.15);
+      }
+
+      textarea {
+        height: 5em;
+        resize: none;
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+
+        input {
+          width: 1.2rem;
+          accent-color: red;
+          margin: 0;
+        }
+      }
+
+      button {
+        margin-top: 1em;
+        font-family: "Roboto", sans-serif;
+        font-size: 1.2rem;
+        background-color: rgba(0, 0, 0, 0.15);
+        font-weight: 500;
+        line-height: 1;
+        padding: 0.5em 0;
+        border-radius: 5px;
+        cursor: pointer;
+        border: none;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.085);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .task-form-container {
+    form {
+      width: 50%;
+      max-width: 350px;
+
+      .task-form-header {
+        h3 {
+          font-size: 0.8em;
+        }
+
+        .close-btn {
+          width: 0.35em;
+        }
+      }
+
+      .task-form-body {
+        label {
+          font-size: 0.8rem;
+        }
+
+        input,
+        select,
+        option {
+          height: 2.2em;
+          font-size: 0.8rem;
+        }
+
+        textarea {
+          font-size: 0.85rem;
+        }
+
+        .checkbox-container {
+          input {
+            width: 1rem;
+          }
+        }
+
+        button {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}
