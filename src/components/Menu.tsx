@@ -2,19 +2,22 @@ import { useRef, useState } from "react";
 import GeneralNav from "./GeneralNav";
 import ListNav from "./ListNav";
 import NewListForm from "./NewListForm";
-import { nanoid } from "nanoid";
 
-function Menu() {
+type MenuProps = {
+  allLists: { title: string | undefined; id: string }[];
+  setAllLists: React.Dispatch<
+    React.SetStateAction<
+      {
+        title: string | undefined;
+        id: string;
+      }[]
+    >
+  >;
+  setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
+};
+
+function Menu({ allLists, setAllLists, setAllTasks }: MenuProps) {
   const [listFormActive, setListFormActive] = useState(false);
-  const [allLists, setAllLists] = useState<
-    {
-      title: string | undefined;
-      id: string;
-    }[]
-  >([
-    { title: "Work", id: nanoid() },
-    { title: "Shopping", id: nanoid() },
-  ]);
 
   const hamburgerMenuRef = useRef<HTMLDivElement>(null);
   const slidingMenuRef = useRef<HTMLDivElement>(null);
@@ -28,6 +31,7 @@ function Menu() {
     <>
       {listFormActive && (
         <NewListForm
+          allLists={allLists}
           setAllLists={setAllLists}
           setListFormActive={setListFormActive}
         />
@@ -38,6 +42,7 @@ function Menu() {
           setListFormActive={setListFormActive}
           allLists={allLists}
           setAllLists={setAllLists}
+          setAllTasks={setAllTasks}
         />
       </div>
       <div className="header">
@@ -57,6 +62,7 @@ function Menu() {
             setListFormActive={setListFormActive}
             allLists={allLists}
             setAllLists={setAllLists}
+            setAllTasks={setAllTasks}
           />
         </div>
       </div>

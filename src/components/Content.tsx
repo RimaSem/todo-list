@@ -4,30 +4,29 @@ import { mdiPlus, mdiWindowClose } from "@mdi/js";
 import Todo from "./Todo";
 import { nanoid } from "nanoid";
 
-function Content() {
+type ContentProps = {
+  allLists: { title: string | undefined; id: string }[];
+  setAllLists: React.Dispatch<
+    React.SetStateAction<
+      {
+        title: string | undefined;
+        id: string;
+      }[]
+    >
+  >;
+  allTasks: any[];
+  setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
+};
+
+function Content({
+  allLists,
+  setAllLists,
+  allTasks,
+  setAllTasks,
+}: ContentProps) {
   const [taskFormActive, setTaskFormActive] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [showImportant, setShowImportant] = useState(false);
-  const [allTasks, setAllTasks] = useState<any[]>([
-    {
-      id: "235f",
-      title: "Walk the cat",
-      details: "for potty and exploring",
-      date: "2023-02-02",
-      time: "22:44",
-      list: "general",
-      isImportant: true,
-    },
-    {
-      id: "236f",
-      title: "Walk the parrot",
-      details: "for flying and exploring",
-      date: "2024-03-02",
-      time: "22:44",
-      list: "work",
-      isImportant: false,
-    },
-  ]);
   const formRef = useRef<any>(null);
   const [taskData, setTaskData] = useState({
     id: "",
@@ -185,8 +184,11 @@ function Content() {
                 defaultValue={taskData.list || ""}
               >
                 <option value="general">General</option>
-                <option value="work">Work</option>
-                <option value="shopping">Shopping</option>
+                {allLists.map((list, index) => (
+                  <option key={index} value={list.title}>
+                    {list.title}
+                  </option>
+                ))}
               </select>
               <div className="checkbox-container">
                 <input

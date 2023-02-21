@@ -1,5 +1,6 @@
 import Icon from "@mdi/react";
 import { mdiTrashCanOutline } from "@mdi/js";
+import { nanoid } from "nanoid";
 
 type ListNavProps = {
   setListFormActive: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,11 +13,17 @@ type ListNavProps = {
       }[]
     >
   >;
+  setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
-function ListNav({ setListFormActive, allLists, setAllLists }: ListNavProps) {
+function ListNav({
+  setListFormActive,
+  allLists,
+  setAllLists,
+  setAllTasks,
+}: ListNavProps) {
   const displayLists = allLists.map((list) => (
-    <div key={list.id} className="list-nav-item">
+    <div key={nanoid()} className="list-nav-item">
       <div className="list-nav-item-text">{list.title}</div>
       <div
         id={list.id}
@@ -30,6 +37,11 @@ function ListNav({ setListFormActive, allLists, setAllLists }: ListNavProps) {
 
   function handleDelete(id: string) {
     setAllLists((prev) => prev.filter((list) => list.id !== id));
+    let listTitles: (string | undefined)[] = [];
+    allLists.forEach((list) => listTitles.push(list.title));
+    setAllTasks((prev) =>
+      prev.filter((task) => !listTitles.includes(task.list))
+    );
   }
 
   return (
