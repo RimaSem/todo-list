@@ -16,6 +16,10 @@ type ContentProps = {
   >;
   allTasks: any[];
   setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
+  filterBy: string;
+  setFilterBy: React.Dispatch<React.SetStateAction<string>>;
+  // filteredTasks: any[];
+  // setFilteredTasks: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 function Content({
@@ -23,6 +27,8 @@ function Content({
   setAllLists,
   allTasks,
   setAllTasks,
+  filterBy,
+  setFilterBy,
 }: ContentProps) {
   const [taskFormActive, setTaskFormActive] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -73,8 +79,8 @@ function Content({
         },
       ]);
     }
-
     resetForm();
+    setFilterBy("");
     setTaskFormActive(false);
   }
 
@@ -109,11 +115,26 @@ function Content({
   }
 
   function displayTasks() {
-    let newArr = [];
-    if (showImportant) {
-      newArr = allTasks.filter((item) => item.isImportant);
+    let newArr: any[] = [];
+
+    function displayImportant() {
+      if (showImportant) {
+        newArr = newArr.filter((item) => item.isImportant);
+      }
+    }
+
+    // if (showImportant) {
+    //   newArr = allTasks.filter((item) => item.isImportant);
+    // } else {
+    //   newArr = allTasks.map((item) => item);
+    // }
+
+    if (filterBy) {
+      newArr = allTasks.filter((item) => item.list === filterBy);
+      displayImportant();
     } else {
-      newArr = allTasks.map((item) => item);
+      newArr = [...allTasks];
+      displayImportant();
     }
 
     return newArr.map((item) => (
@@ -183,7 +204,7 @@ function Content({
                 name="taskList"
                 defaultValue={taskData.list || ""}
               >
-                <option value="general">General</option>
+                <option value="General">General</option>
                 {allLists.map((list, index) => (
                   <option key={index} value={list.title}>
                     {list.title}

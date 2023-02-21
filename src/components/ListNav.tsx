@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 type ListNavProps = {
   setListFormActive: React.Dispatch<React.SetStateAction<boolean>>;
   allLists: { title: string | undefined; id: string }[];
+  allTasks: any[];
   setAllLists: React.Dispatch<
     React.SetStateAction<
       {
@@ -14,16 +15,27 @@ type ListNavProps = {
     >
   >;
   setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
+  filterBy: string;
+  setFilterBy: React.Dispatch<React.SetStateAction<string>>;
+  // filteredTasks: any[];
+  // setFilteredTasks: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 function ListNav({
   setListFormActive,
   allLists,
+  allTasks,
   setAllLists,
   setAllTasks,
+  filterBy,
+  setFilterBy,
 }: ListNavProps) {
   const displayLists = allLists.map((list) => (
-    <div key={nanoid()} className="list-nav-item">
+    <div
+      key={nanoid()}
+      className="list-nav-item"
+      onClick={() => setFilterBy(list.title ? list.title : "")}
+    >
       <div className="list-nav-item-text">{list.title}</div>
       <div
         id={list.id}
@@ -49,7 +61,7 @@ function ListNav({
       <button onClick={() => setListFormActive(true)} type="button">
         Add New List
       </button>
-      <div className="list-nav-item">
+      <div className="list-nav-item" onClick={() => setFilterBy("General")}>
         <div className="list-nav-item-text">General</div>
       </div>
       {displayLists}

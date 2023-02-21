@@ -36,18 +36,26 @@ function App() {
     },
   ]);
 
+  // const [filteredTasks, setFilteredTasks] = useState<any[]>(allTasks);
+  const [filterBy, setFilterBy] = useState("");
+
   return (
     <div className="App">
       <Menu
         allLists={allLists}
         setAllLists={setAllLists}
+        allTasks={allTasks}
         setAllTasks={setAllTasks}
+        filterBy={filterBy}
+        setFilterBy={setFilterBy}
       />
       <Content
         allLists={allLists}
         setAllLists={setAllLists}
         allTasks={allTasks}
         setAllTasks={setAllTasks}
+        filterBy={filterBy}
+        setFilterBy={setFilterBy}
       />
     </div>
   );

@@ -6,7 +6,12 @@ import {
   mdiCheckboxMarkedOutline,
 } from "@mdi/js";
 
-function GeneralNav() {
+type GeneralNavProps = {
+  filterBy: string;
+  setFilterBy: React.Dispatch<React.SetStateAction<string>>;
+};
+
+function GeneralNav({ filterBy, setFilterBy }: GeneralNavProps) {
   return (
     <div className="general-nav">
       <div className="nav-item all-tasks">
