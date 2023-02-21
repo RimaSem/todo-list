@@ -12,6 +12,7 @@ type TodoProps = {
   isImportant: boolean;
   handleTaskDelete: (id: string) => void;
   handleTaskEdit: (taskInfo: {
+    id: string;
     title: string;
     details: string;
     date: string;
@@ -41,7 +42,7 @@ function Todo({
     } else {
       todoRef.current?.classList.remove("important");
     }
-  }, []);
+  }, [handleTaskEdit]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
@@ -69,7 +70,15 @@ function Todo({
           <div
             className="todo-edit"
             onClick={() =>
-              handleTaskEdit({ title, details, date, time, list, isImportant })
+              handleTaskEdit({
+                id,
+                title,
+                details,
+                date,
+                time,
+                list,
+                isImportant,
+              })
             }
           >
             <Icon className="todo-edit-btn" path={mdiPencil} />

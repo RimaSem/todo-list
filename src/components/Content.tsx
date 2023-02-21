@@ -8,33 +8,44 @@ function Content() {
   const [taskFormActive, setTaskFormActive] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [allTasks, setAllTasks] = useState<any[]>([
-    <Todo
-      key="235f"
-      id="235f"
-      title="Walk the cat"
-      details="for potty and exploring"
-      date="2023-02-02"
-      time="22:44"
-      list="general"
-      isImportant={true}
-      handleTaskDelete={handleTaskDelete}
-      handleTaskEdit={handleTaskEdit}
-    />,
-    <Todo
-      key="236f"
-      id="236f"
-      title="Walk the parrot"
-      details="for potty and exploring"
-      date="2024-02-02"
-      time="18:00"
-      list="work"
-      isImportant={false}
-      handleTaskDelete={handleTaskDelete}
-      handleTaskEdit={handleTaskEdit}
-    />,
+    {
+      id: "235f",
+      component: (
+        <Todo
+          key="235f"
+          id="235f"
+          title="Walk the cat"
+          details="for potty and exploring"
+          date="2023-02-02"
+          time="22:44"
+          list="general"
+          isImportant={true}
+          handleTaskDelete={handleTaskDelete}
+          handleTaskEdit={handleTaskEdit}
+        />
+      ),
+    },
+    {
+      id: "236f",
+      component: (
+        <Todo
+          key="236f"
+          id="236f"
+          title="Walk the parrot"
+          details="for potty and exploring"
+          date="2024-02-02"
+          time="18:00"
+          list="work"
+          isImportant={false}
+          handleTaskDelete={handleTaskDelete}
+          handleTaskEdit={handleTaskEdit}
+        />
+      ),
+    },
   ]);
   const formRef = useRef<any>(null);
   const [taskData, setTaskData] = useState({
+    id: "",
     title: "",
     details: "",
     date: "",
@@ -46,21 +57,55 @@ function Content() {
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     // if isEdited, then update tasks list, and turn off isEdited
-    setAllTasks((prev) => [
-      ...prev,
-      <Todo
-        key={nanoid()}
-        id={nanoid()}
-        title={formRef.current[0].value}
-        details={formRef.current[1].value}
-        date={formRef.current[2].value}
-        time={formRef.current[3].value}
-        list={formRef.current[4].value}
-        isImportant={formRef.current[5].checked}
-        handleTaskDelete={handleTaskDelete}
-        handleTaskEdit={handleTaskEdit}
-      />,
-    ]);
+    if (isEdited) {
+      setAllTasks((prev) =>
+        prev.map((item) => {
+          if (taskData.id === item.id) {
+            return {
+              ...item,
+              component: (
+                <Todo
+                  key={taskData.id}
+                  id={taskData.id}
+                  title={formRef.current[0].value}
+                  details={formRef.current[1].value}
+                  date={formRef.current[2].value}
+                  time={formRef.current[3].value}
+                  list={formRef.current[4].value}
+                  isImportant={formRef.current[5].checked}
+                  handleTaskDelete={handleTaskDelete}
+                  handleTaskEdit={handleTaskEdit}
+                />
+              ),
+            };
+          } else {
+            return item;
+          }
+        })
+      );
+    } else {
+      setAllTasks((prev) => [
+        ...prev,
+        {
+          id: nanoid(),
+          component: (
+            <Todo
+              key={nanoid()}
+              id={nanoid()}
+              title={formRef.current[0].value}
+              details={formRef.current[1].value}
+              date={formRef.current[2].value}
+              time={formRef.current[3].value}
+              list={formRef.current[4].value}
+              isImportant={formRef.current[5].checked}
+              handleTaskDelete={handleTaskDelete}
+              handleTaskEdit={handleTaskEdit}
+            />
+          ),
+        },
+      ]);
+    }
+
     resetForm();
     setTaskFormActive(false);
   }
@@ -70,6 +115,7 @@ function Content() {
   }
 
   function handleTaskEdit(taskInfo: {
+    id: string;
     title: string;
     details: string;
     date: string;
@@ -84,6 +130,7 @@ function Content() {
 
   function resetForm() {
     setTaskData({
+      id: "",
       title: "",
       details: "",
       date: "",
@@ -175,7 +222,7 @@ function Content() {
             <Icon path={mdiPlus} size={0.8} /> Create Todo
           </button>
         </div>
-        {allTasks}
+        {allTasks.map((item) => item.component)}
       </div>
     </>
   );
