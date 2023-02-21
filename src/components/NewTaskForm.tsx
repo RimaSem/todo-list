@@ -1,16 +1,47 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import Icon from "@mdi/react";
 import { mdiWindowClose } from "@mdi/js";
 import { nanoid } from "nanoid";
+import Todo from "./Todo";
 
 type NewTaskFormProps = {
+  setAllTasks: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
   setTaskFormActive: React.Dispatch<React.SetStateAction<boolean>>;
+  handleTaskDelete: (id: string) => void;
+  editTask: (id: string) => void;
 };
 
-function NewTaskForm({ setTaskFormActive }: NewTaskFormProps) {
+function NewTaskForm({
+  setAllTasks,
+  setTaskFormActive,
+  handleTaskDelete,
+  editTask,
+}: NewTaskFormProps) {
+  const formRef = useRef<any>(null);
+
+  function handleSubmit(e: React.SyntheticEvent) {
+    e.preventDefault();
+    setAllTasks((prev) => [
+      ...prev,
+      <Todo
+        key={nanoid()}
+        id={nanoid()}
+        title={formRef.current[0].value}
+        details={formRef.current[1].value}
+        date={formRef.current[2].value}
+        time={formRef.current[3].value}
+        list={formRef.current[4].value}
+        isImportant={formRef.current[5].checked}
+        handleTaskDelete={handleTaskDelete}
+        editTask={editTask}
+      />,
+    ]);
+    setTaskFormActive(false);
+  }
+
   return (
     <div className="task-form-container">
-      <form>
+      <form ref={formRef} onSubmit={handleSubmit}>
         <div className="task-form-header">
           <h3>Add new task</h3>
           <div className="icon" onClick={() => setTaskFormActive(false)}>

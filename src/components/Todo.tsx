@@ -1,10 +1,47 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Icon from "@mdi/react";
 import { mdiPencil, mdiTrashCanOutline } from "@mdi/js";
 
-function Todo() {
+type TodoProps = {
+  id: string;
+  title: string;
+  details: string;
+  date: string;
+  time: string;
+  list: string;
+  isImportant: boolean;
+  handleTaskDelete: (id: string) => void;
+  handleTaskEdit: (taskInfo: {
+    title: string;
+    details: string;
+    date: string;
+    time: string;
+    list: string;
+    isImportant: boolean;
+  }) => void;
+};
+
+function Todo({
+  id,
+  title,
+  details,
+  date,
+  time,
+  list,
+  isImportant,
+  handleTaskDelete,
+  handleTaskEdit,
+}: TodoProps) {
   const [showDetails, setShowDetails] = useState(false);
   const todoRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (isImportant) {
+      todoRef.current?.classList.add("important");
+    } else {
+      todoRef.current?.classList.remove("important");
+    }
+  }, []);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.checked) {
@@ -27,28 +64,37 @@ function Todo() {
           className="todo-checkbox"
           type="checkbox"
         />
-        <span className="todo-title">Walk the dog</span>
+        <span className="todo-title">{title}</span>
         <div className="todo-btns" onClick={(e) => e.stopPropagation()}>
-          <Icon className="todo-edit-btn" path={mdiPencil} />
-          <Icon className="todo-delete-btn" path={mdiTrashCanOutline} />
+          <div
+            className="todo-edit"
+            onClick={() =>
+              handleTaskEdit({ title, details, date, time, list, isImportant })
+            }
+          >
+            <Icon className="todo-edit-btn" path={mdiPencil} />
+          </div>
+          <div className="todo-delete" onClick={() => handleTaskDelete(id)}>
+            <Icon className="todo-delete-btn" path={mdiTrashCanOutline} />
+          </div>
         </div>
       </div>
       {showDetails && (
         <div className="todo-details">
           <p>
-            <span>Title:</span> Walk the dog
+            <span>Title:</span> {title}
           </p>
           <p>
-            <span>Details:</span> use the blue leash and don't forget poop bags
+            <span>Details:</span> {details}
           </p>
           <p>
-            <span>Date:</span> 2023-10-10
+            <span>Date:</span> {date}
           </p>
           <p>
-            <span>Time:</span> 4:30pm
+            <span>Time:</span> {time}
           </p>
           <p>
-            <span>Todo list:</span> general
+            <span>Todo list:</span> {list}
           </p>
         </div>
       )}
