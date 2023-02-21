@@ -7,40 +7,25 @@ import { nanoid } from "nanoid";
 function Content() {
   const [taskFormActive, setTaskFormActive] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
+  const [showImportant, setShowImportant] = useState(false);
   const [allTasks, setAllTasks] = useState<any[]>([
     {
       id: "235f",
-      component: (
-        <Todo
-          key="235f"
-          id="235f"
-          title="Walk the cat"
-          details="for potty and exploring"
-          date="2023-02-02"
-          time="22:44"
-          list="general"
-          isImportant={true}
-          handleTaskDelete={handleTaskDelete}
-          handleTaskEdit={handleTaskEdit}
-        />
-      ),
+      title: "Walk the cat",
+      details: "for potty and exploring",
+      date: "2023-02-02",
+      time: "22:44",
+      list: "general",
+      isImportant: true,
     },
     {
       id: "236f",
-      component: (
-        <Todo
-          key="236f"
-          id="236f"
-          title="Walk the parrot"
-          details="for potty and exploring"
-          date="2024-02-02"
-          time="18:00"
-          list="work"
-          isImportant={false}
-          handleTaskDelete={handleTaskDelete}
-          handleTaskEdit={handleTaskEdit}
-        />
-      ),
+      title: "Walk the parrot",
+      details: "for flying and exploring",
+      date: "2024-03-02",
+      time: "22:44",
+      list: "work",
+      isImportant: false,
     },
   ]);
   const formRef = useRef<any>(null);
@@ -56,52 +41,36 @@ function Content() {
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    // if isEdited, then update tasks list, and turn off isEdited
     if (isEdited) {
       setAllTasks((prev) =>
         prev.map((item) => {
           if (taskData.id === item.id) {
             return {
               ...item,
-              component: (
-                <Todo
-                  key={taskData.id}
-                  id={taskData.id}
-                  title={formRef.current[0].value}
-                  details={formRef.current[1].value}
-                  date={formRef.current[2].value}
-                  time={formRef.current[3].value}
-                  list={formRef.current[4].value}
-                  isImportant={formRef.current[5].checked}
-                  handleTaskDelete={handleTaskDelete}
-                  handleTaskEdit={handleTaskEdit}
-                />
-              ),
+              title: formRef.current[0].value,
+              details: formRef.current[1].value,
+              date: formRef.current[2].value,
+              time: formRef.current[3].value,
+              list: formRef.current[4].value,
+              isImportant: formRef.current[5].checked,
             };
           } else {
             return item;
           }
         })
       );
+      setIsEdited(false);
     } else {
       setAllTasks((prev) => [
         ...prev,
         {
           id: nanoid(),
-          component: (
-            <Todo
-              key={nanoid()}
-              id={nanoid()}
-              title={formRef.current[0].value}
-              details={formRef.current[1].value}
-              date={formRef.current[2].value}
-              time={formRef.current[3].value}
-              list={formRef.current[4].value}
-              isImportant={formRef.current[5].checked}
-              handleTaskDelete={handleTaskDelete}
-              handleTaskEdit={handleTaskEdit}
-            />
-          ),
+          title: formRef.current[0].value,
+          details: formRef.current[1].value,
+          date: formRef.current[2].value,
+          time: formRef.current[3].value,
+          list: formRef.current[4].value,
+          isImportant: formRef.current[5].checked,
         },
       ]);
     }
@@ -111,7 +80,7 @@ function Content() {
   }
 
   function handleTaskDelete(id: string) {
-    setAllTasks((prev) => prev.filter((task) => task.props.id !== id));
+    setAllTasks((prev) => prev.filter((task) => task.id !== id));
   }
 
   function handleTaskEdit(taskInfo: {
@@ -138,6 +107,30 @@ function Content() {
       list: "",
       isImportant: false,
     });
+  }
+
+  function displayTasks() {
+    let newArr = [];
+    if (showImportant) {
+      newArr = allTasks.filter((item) => item.isImportant);
+    } else {
+      newArr = allTasks.map((item) => item);
+    }
+
+    return newArr.map((item) => (
+      <Todo
+        key={item.id}
+        id={item.id}
+        title={item.title}
+        details={item.details}
+        date={item.date}
+        time={item.time}
+        list={item.list}
+        isImportant={item.isImportant}
+        handleTaskDelete={handleTaskDelete}
+        handleTaskEdit={handleTaskEdit}
+      />
+    ));
   }
 
   return (
@@ -211,7 +204,12 @@ function Content() {
       )}
       <div className="content">
         <div className="content-btns">
-          <button className="sort-btn">Important</button>
+          <button
+            className="sort-btn"
+            onClick={() => setShowImportant((prev) => !prev)}
+          >
+            {showImportant ? "All" : "Important"}
+          </button>
           <button
             className="new-task-btn"
             onClick={() => {
@@ -222,7 +220,7 @@ function Content() {
             <Icon path={mdiPlus} size={0.8} /> Create Todo
           </button>
         </div>
-        {allTasks.map((item) => item.component)}
+        {displayTasks()}
       </div>
     </>
   );
