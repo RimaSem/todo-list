@@ -24,6 +24,7 @@ function App() {
       time: "22:44",
       list: "General",
       isImportant: true,
+      isCompleted: false,
     },
     {
       id: "236f",
@@ -33,10 +34,10 @@ function App() {
       time: "22:44",
       list: "Work",
       isImportant: false,
+      isCompleted: false,
     },
   ]);
 
-  // const [filteredTasks, setFilteredTasks] = useState<any[]>(allTasks);
   const [filterBy, setFilterBy] = useState("");
 
   return (

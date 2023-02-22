@@ -6,6 +6,7 @@ import NewListForm from "./NewListForm";
 type MenuProps = {
   allLists: { title: string | undefined; id: string }[];
   allTasks: any[];
+  filterBy: string;
   setAllLists: React.Dispatch<
     React.SetStateAction<
       {
@@ -15,18 +16,15 @@ type MenuProps = {
     >
   >;
   setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
-  // filteredTasks: any[];
-  // setFilteredTasks: React.Dispatch<React.SetStateAction<any[]>>;
-  filterBy: string;
   setFilterBy: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function Menu({
   allLists,
   allTasks,
+  filterBy,
   setAllLists,
   setAllTasks,
-  filterBy,
   setFilterBy,
 }: MenuProps) {
   const [listFormActive, setListFormActive] = useState(false);

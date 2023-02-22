@@ -17,8 +17,6 @@ type ListNavProps = {
   setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
   filterBy: string;
   setFilterBy: React.Dispatch<React.SetStateAction<string>>;
-  // filteredTasks: any[];
-  // setFilteredTasks: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 function ListNav({
@@ -40,7 +38,10 @@ function ListNav({
       <div
         id={list.id}
         className="delete-list-icon"
-        onClick={() => handleDelete(list.id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleDelete(list.id);
+        }}
       >
         <Icon path={mdiTrashCanOutline} />
       </div>

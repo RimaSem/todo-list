@@ -18,8 +18,6 @@ type ContentProps = {
   setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
   filterBy: string;
   setFilterBy: React.Dispatch<React.SetStateAction<string>>;
-  // filteredTasks: any[];
-  // setFilteredTasks: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 function Content({
@@ -33,6 +31,7 @@ function Content({
   const [taskFormActive, setTaskFormActive] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [showImportant, setShowImportant] = useState(false);
+  const [today, setToday] = useState(new Date().toISOString().substring(0, 10));
   const formRef = useRef<any>(null);
   const [taskData, setTaskData] = useState({
     id: "",
@@ -54,7 +53,7 @@ function Content({
               ...item,
               title: formRef.current[0].value,
               details: formRef.current[1].value,
-              date: formRef.current[2].value,
+              date: formRef.current[2].value || today,
               time: formRef.current[3].value,
               list: formRef.current[4].value,
               isImportant: formRef.current[5].checked,
@@ -72,10 +71,11 @@ function Content({
           id: nanoid(),
           title: formRef.current[0].value,
           details: formRef.current[1].value,
-          date: formRef.current[2].value,
+          date: formRef.current[2].value || today,
           time: formRef.current[3].value,
           list: formRef.current[4].value,
           isImportant: formRef.current[5].checked,
+          isCompleted: false,
         },
       ]);
     }
@@ -123,18 +123,28 @@ function Content({
       }
     }
 
-    // if (showImportant) {
-    //   newArr = allTasks.filter((item) => item.isImportant);
-    // } else {
-    //   newArr = allTasks.map((item) => item);
-    // }
-
-    if (filterBy) {
-      newArr = allTasks.filter((item) => item.list === filterBy);
-      displayImportant();
-    } else {
-      newArr = [...allTasks];
-      displayImportant();
+    switch (filterBy) {
+      case "":
+        newArr = [...allTasks];
+        displayImportant();
+        break;
+      case "Today":
+        newArr = allTasks.filter((item) => item.date === today);
+        displayImportant();
+        break;
+      case "Overdue":
+        newArr = allTasks.filter(
+          (item) => item.date !== today && new Date(item.date) < new Date()
+        );
+        displayImportant();
+        break;
+      case "Completed":
+        newArr = allTasks.filter((item) => item.isCompleted);
+        displayImportant();
+        break;
+      default:
+        newArr = allTasks.filter((item) => item.list === filterBy);
+        displayImportant();
     }
 
     return newArr.map((item) => (
@@ -147,8 +157,10 @@ function Content({
         time={item.time}
         list={item.list}
         isImportant={item.isImportant}
+        isCompleted={item.isCompleted}
         handleTaskDelete={handleTaskDelete}
         handleTaskEdit={handleTaskEdit}
+        setAllTasks={setAllTasks}
       />
     ));
   }

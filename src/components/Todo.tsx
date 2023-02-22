@@ -10,6 +10,7 @@ type TodoProps = {
   time: string;
   list: string;
   isImportant: boolean;
+  isCompleted: boolean;
   handleTaskDelete: (id: string) => void;
   handleTaskEdit: (taskInfo: {
     id: string;
@@ -19,7 +20,9 @@ type TodoProps = {
     time: string;
     list: string;
     isImportant: boolean;
+    isCompleted: boolean;
   }) => void;
+  setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 function Todo({
@@ -30,10 +33,13 @@ function Todo({
   time,
   list,
   isImportant,
+  isCompleted,
   handleTaskDelete,
   handleTaskEdit,
+  setAllTasks,
 }: TodoProps) {
   const [showDetails, setShowDetails] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const todoRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -44,11 +50,32 @@ function Todo({
     }
   }, [handleTaskEdit]);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.checked) {
+  useEffect(() => {
+    if (isCompleted) {
       todoRef.current?.classList.add("completed");
     } else {
       todoRef.current?.classList.remove("completed");
+    }
+  }, [isChecked]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setIsChecked((prev) => !prev);
+    if (e.target.checked) {
+      setAllTasks((prev) =>
+        prev.map((task) => {
+          if (task.id === id) {
+            return { ...task, isCompleted: true };
+          } else return task;
+        })
+      );
+    } else {
+      setAllTasks((prev) =>
+        prev.map((task) => {
+          if (task.id === id) {
+            return { ...task, isCompleted: false };
+          } else return task;
+        })
+      );
     }
   }
 
@@ -64,6 +91,7 @@ function Todo({
           onClick={(e) => e.stopPropagation()}
           className="todo-checkbox"
           type="checkbox"
+          checked={isCompleted}
         />
         <span className="todo-title">{title}</span>
         <div className="todo-btns" onClick={(e) => e.stopPropagation()}>
@@ -78,6 +106,7 @@ function Todo({
                 time,
                 list,
                 isImportant,
+                isCompleted,
               })
             }
           >
