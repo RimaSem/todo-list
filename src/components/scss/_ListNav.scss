@@ -37,7 +37,7 @@
 
     &:hover,
     &:focus {
-      background-color: rgba(255, 255, 255, 0.352);
+      background-color: rgba(255, 255, 255, 0.156);
     }
 
     .delete-list-icon {
@@ -50,6 +50,10 @@
         color: rgba(171, 5, 5, 0.667);
       }
     }
+  }
+
+  .list-nav-item.active {
+    background-color: rgba(255, 255, 255, 0.352);
   }
 }
 

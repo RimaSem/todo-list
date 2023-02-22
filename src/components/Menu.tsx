@@ -28,6 +28,7 @@ function Menu({
   setFilterBy,
 }: MenuProps) {
   const [listFormActive, setListFormActive] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   const hamburgerMenuRef = useRef<HTMLDivElement>(null);
   const slidingMenuRef = useRef<HTMLDivElement>(null);
@@ -35,6 +36,11 @@ function Menu({
   function displayMenu() {
     hamburgerMenuRef.current?.classList.toggle("active");
     slidingMenuRef.current?.classList.toggle("active");
+  }
+
+  function handleClick(name: string) {
+    setSelectedFilter(name);
+    displayMenu();
   }
 
   return (
@@ -47,7 +53,14 @@ function Menu({
         />
       )}
       <div ref={slidingMenuRef} className="off-screen-menu">
-        <GeneralNav filterBy={filterBy} setFilterBy={setFilterBy} />
+        <GeneralNav
+          filterBy={filterBy}
+          setFilterBy={setFilterBy}
+          selectedFilter={selectedFilter}
+          setSelectedFilter={setSelectedFilter}
+          displayMenu={displayMenu}
+          handleClick={handleClick}
+        />
         <ListNav
           setListFormActive={setListFormActive}
           allLists={allLists}
@@ -56,6 +69,9 @@ function Menu({
           setAllTasks={setAllTasks}
           filterBy={filterBy}
           setFilterBy={setFilterBy}
+          selectedFilter={selectedFilter}
+          setSelectedFilter={setSelectedFilter}
+          handleClick={handleClick}
         />
       </div>
       <div className="header">
@@ -70,7 +86,14 @@ function Menu({
         </div>
         <div className="menu-title">Todo List</div>
         <div className="sidebar-menu">
-          <GeneralNav filterBy={filterBy} setFilterBy={setFilterBy} />
+          <GeneralNav
+            filterBy={filterBy}
+            setFilterBy={setFilterBy}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+            displayMenu={displayMenu}
+            handleClick={handleClick}
+          />
           <ListNav
             setListFormActive={setListFormActive}
             allLists={allLists}
@@ -79,6 +102,9 @@ function Menu({
             setAllTasks={setAllTasks}
             filterBy={filterBy}
             setFilterBy={setFilterBy}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+            handleClick={handleClick}
           />
         </div>
       </div>
