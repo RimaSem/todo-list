@@ -134,7 +134,10 @@ function Content({
         break;
       case "Overdue":
         newArr = allTasks.filter(
-          (item) => item.date !== today && new Date(item.date) < new Date()
+          (item) =>
+            !item.isCompleted &&
+            item.date !== today &&
+            new Date(item.date) < new Date()
         );
         displayImportant();
         break;

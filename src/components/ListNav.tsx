@@ -36,11 +36,10 @@ function ListNav({
     >
       <div className="list-nav-item-text">{list.title}</div>
       <div
-        id={list.id}
         className="delete-list-icon"
         onClick={(e) => {
           e.stopPropagation();
-          handleDelete(list.id);
+          handleDelete(list.title);
         }}
       >
         <Icon path={mdiTrashCanOutline} />
@@ -48,13 +47,9 @@ function ListNav({
     </div>
   ));
 
-  function handleDelete(id: string) {
-    setAllLists((prev) => prev.filter((list) => list.id !== id));
-    let listTitles: (string | undefined)[] = [];
-    allLists.forEach((list) => listTitles.push(list.title));
-    setAllTasks((prev) =>
-      prev.filter((task) => !listTitles.includes(task.list))
-    );
+  function handleDelete(title: string | undefined) {
+    setAllLists((prev) => prev.filter((list) => list.title !== title));
+    setAllTasks((prev) => prev.filter((task) => task.list !== title));
   }
 
   return (
