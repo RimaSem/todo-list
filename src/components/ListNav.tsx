@@ -2,6 +2,7 @@ import Icon from "@mdi/react";
 import { mdiTrashCanOutline } from "@mdi/js";
 import { nanoid } from "nanoid";
 import { useEffect } from "react";
+import "./scss/ListNav.scss";
 
 type ListNavProps = {
   setListFormActive: React.Dispatch<React.SetStateAction<boolean>>;

@@ -3,6 +3,8 @@ import Icon from "@mdi/react";
 import { mdiPlus, mdiWindowClose } from "@mdi/js";
 import Todo from "./Todo";
 import { nanoid } from "nanoid";
+import "./scss/Content.scss";
+import "./scss/task-form.scss";
 
 type ContentProps = {
   allLists: { title: string | undefined; id: string }[];

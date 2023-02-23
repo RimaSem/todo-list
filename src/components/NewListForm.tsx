@@ -2,6 +2,7 @@ import { useRef } from "react";
 import Icon from "@mdi/react";
 import { mdiWindowClose } from "@mdi/js";
 import { nanoid } from "nanoid";
+import "./scss/NewListForm.scss";
 
 type NewListFormProps = {
   setListFormActive: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Icon from "@mdi/react";
 import { mdiPencil, mdiTrashCanOutline } from "@mdi/js";
+import "./scss/Todo.scss";
 
 type TodoProps = {
   id: string;

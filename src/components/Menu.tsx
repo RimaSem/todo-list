@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import GeneralNav from "./GeneralNav";
 import ListNav from "./ListNav";
 import NewListForm from "./NewListForm";
+import "./scss/Menu.scss";
 
 type MenuProps = {
   allLists: { title: string | undefined; id: string }[];

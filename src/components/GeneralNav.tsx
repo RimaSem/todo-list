@@ -5,6 +5,7 @@ import {
   mdiAlertCircleOutline,
   mdiCheckboxMarkedOutline,
 } from "@mdi/js";
+import "./scss/GeneralNav.scss";
 
 type GeneralNavProps = {
   filterBy: string;
