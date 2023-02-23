@@ -4,25 +4,6 @@ import GeneralNav from "./GeneralNav";
 import ListNav from "./ListNav";
 import NewListForm from "./NewListForm";
 import "./scss/Menu.scss";
-// import { MenuProps } from "../types";
-
-// type MenuProps = {
-//   allLists: { title: string | undefined; id: string }[];
-//   allTasks: any[];
-//   filterBy: string;
-//   setAllLists: React.Dispatch<
-//     React.SetStateAction<
-//       {
-//         title: string | undefined;
-//         id: string;
-//       }[]
-//     >
-//   >;
-//   setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
-//   setFilterBy: React.Dispatch<React.SetStateAction<string>>;
-//   selectedFilter: string;
-//   setSelectedFilter: React.Dispatch<React.SetStateAction<string>>;
-// };
 
 function Menu() {
   const context = useContext(AppContext);

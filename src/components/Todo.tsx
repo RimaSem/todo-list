@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { AppContext } from "../AppContext";
 import { TaskType } from "../types";
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { mdiPencil, mdiTrashCanOutline } from "@mdi/js";
 import "./scss/Todo.scss";
 

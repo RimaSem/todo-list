@@ -1,7 +1,7 @@
 import { useState, useRef, useContext } from "react";
 import { AppContext } from "../AppContext";
 import { AllTasksType, TaskType } from "../types";
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { mdiPlus, mdiWindowClose } from "@mdi/js";
 import Todo from "./Todo";
 import { nanoid } from "nanoid";
