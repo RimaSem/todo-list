@@ -20,6 +20,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      margin-right: 1em;
     }
 
     .todo-btns {
@@ -89,6 +90,10 @@
 
       .todo-checkbox {
         transform: scale(1.5);
+      }
+
+      .todo-title {
+        white-space: inherit;
       }
 
       .todo-btns {

@@ -41,7 +41,13 @@ function NewListForm({ setListFormActive }: NewListFormProps) {
         <div ref={errorRef} className="list-input-error">
           This list already exists
         </div>
-        <input ref={inputRef} id="list-input" name="newListInput" required />
+        <input
+          ref={inputRef}
+          id="list-input"
+          name="newListInput"
+          maxLength={12}
+          required
+        />
         <button>Add</button>
       </form>
     </div>
