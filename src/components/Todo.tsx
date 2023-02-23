@@ -22,6 +22,7 @@ type TodoProps = {
     isImportant: boolean;
     isCompleted: boolean;
   }) => void;
+  allTasks: any[];
   setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
@@ -36,6 +37,7 @@ function Todo({
   isCompleted,
   handleTaskDelete,
   handleTaskEdit,
+  allTasks,
   setAllTasks,
 }: TodoProps) {
   const [showDetails, setShowDetails] = useState(false);

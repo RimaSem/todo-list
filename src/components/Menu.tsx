@@ -17,6 +17,8 @@ type MenuProps = {
   >;
   setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
   setFilterBy: React.Dispatch<React.SetStateAction<string>>;
+  selectedFilter: string;
+  setSelectedFilter: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function Menu({
@@ -26,9 +28,10 @@ function Menu({
   setAllLists,
   setAllTasks,
   setFilterBy,
+  selectedFilter,
+  setSelectedFilter,
 }: MenuProps) {
   const [listFormActive, setListFormActive] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("");
 
   const hamburgerMenuRef = useRef<HTMLDivElement>(null);
   const slidingMenuRef = useRef<HTMLDivElement>(null);
@@ -40,7 +43,9 @@ function Menu({
 
   function handleClick(name: string) {
     setSelectedFilter(name);
-    displayMenu();
+    if (screen.width <= 800) {
+      displayMenu();
+    }
   }
 
   return (

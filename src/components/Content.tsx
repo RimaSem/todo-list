@@ -18,6 +18,8 @@ type ContentProps = {
   setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
   filterBy: string;
   setFilterBy: React.Dispatch<React.SetStateAction<string>>;
+  selectedFilter: string;
+  setSelectedFilter: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function Content({
@@ -27,6 +29,8 @@ function Content({
   setAllTasks,
   filterBy,
   setFilterBy,
+  selectedFilter,
+  setSelectedFilter,
 }: ContentProps) {
   const [taskFormActive, setTaskFormActive] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -45,6 +49,7 @@ function Content({
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
+    setSelectedFilter("");
     if (isEdited) {
       setAllTasks((prev) =>
         prev.map((item) => {
@@ -163,6 +168,7 @@ function Content({
         isCompleted={item.isCompleted}
         handleTaskDelete={handleTaskDelete}
         handleTaskEdit={handleTaskEdit}
+        allTasks={allTasks}
         setAllTasks={setAllTasks}
       />
     ));
