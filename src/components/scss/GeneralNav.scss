@@ -1,3 +1,5 @@
+@import "../../scss/variables";
+
 .general-nav {
   margin-top: 2em;
 
@@ -15,12 +17,12 @@
 
     &:hover,
     &:focus {
-      background-color: rgba(255, 255, 255, 0.156);
+      background-color: $hover-nav-color;
     }
   }
 
   .nav-item.active {
-    background-color: rgba(255, 255, 255, 0.352);
+    background-color: $active-nav-color;
   }
 }
 

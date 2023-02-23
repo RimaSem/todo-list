@@ -1,3 +1,5 @@
+@import "../../scss/variables";
+
 .content {
   flex: 1;
 
@@ -8,11 +10,11 @@
 
     .sort-btn,
     .new-task-btn {
-      background-color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: $primary-color;
+      box-shadow: $main-box-shadow;
       width: max-content;
       padding: 0.4em 0.8em;
-      font-family: "Roboto", sans-serif;
+      font-family: $main-font;
       font-weight: 700;
       border: none;
       font-size: 1.03rem;

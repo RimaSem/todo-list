@@ -1,3 +1,4 @@
+$main-font: "Roboto", sans-serif;
 $body-bg-color: linear-gradient(
   to right top,
   #d16ba5,
@@ -13,3 +14,15 @@ $body-bg-color: linear-gradient(
   #54cdd8,
   #65d3cc
 );
+
+$primary-color: rgba(255, 255, 255, 0.5);
+$active-nav-color: rgba(255, 255, 255, 0.352);
+$hover-nav-color: rgba(255, 255, 255, 0.156);
+$hover-delete-color: rgba(171, 5, 5, 0.667);
+$hover-submit-btn-color: rgba(0, 0, 0, 0.085);
+
+$main-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+$form-accent-color: rgba(0, 0, 0, 0.15);
+$form-close-btn-color: rgb(58, 58, 58);
+$form-input-border-color: rgba(0, 0, 0, 0.3);

@@ -1,3 +1,5 @@
+@import "../../scss/variables";
+
 .list-nav {
   margin-top: 2em;
   display: flex;
@@ -10,7 +12,7 @@
     width: 80%;
     margin: 0 auto;
     margin-bottom: 0.5em;
-    font-family: "Roboto", sans-serif;
+    font-family: $main-font;
     font-size: 1rem;
     padding: 0.4em 0;
     color: rgb(0, 22, 123);
@@ -38,7 +40,7 @@
 
     &:hover,
     &:focus {
-      background-color: rgba(255, 255, 255, 0.156);
+      background-color: $hover-nav-color;
     }
 
     .delete-list-icon {
@@ -48,13 +50,13 @@
       cursor: pointer;
 
       &:hover {
-        color: rgba(171, 5, 5, 0.667);
+        color: $hover-delete-color;
       }
     }
   }
 
   .list-nav-item.active {
-    background-color: rgba(255, 255, 255, 0.352);
+    background-color: $active-nav-color;
   }
 }
 
