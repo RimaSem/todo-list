@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { AppContext } from "../AppContext";
 import Icon from "@mdi/react";
 import {
   mdiListBoxOutline,
@@ -8,52 +10,38 @@ import {
 import "./scss/GeneralNav.scss";
 
 type GeneralNavProps = {
-  filterBy: string;
-  setFilterBy: React.Dispatch<React.SetStateAction<string>>;
-  selectedFilter: string;
-  setSelectedFilter: React.Dispatch<React.SetStateAction<string>>;
-  displayMenu: () => void;
   handleClick: (arg0: string) => void;
 };
 
-function GeneralNav({
-  filterBy,
-  setFilterBy,
-  selectedFilter,
-  setSelectedFilter,
-  displayMenu,
-  handleClick,
-}: GeneralNavProps) {
+function GeneralNav({ handleClick }: GeneralNavProps) {
+  const context = useContext(AppContext);
+
+  function createNavItem(
+    icon: string,
+    name: string,
+    clickProp?: string,
+    text?: string,
+    addClass?: string
+  ) {
+    return (
+      <div
+        className={`nav-item ${addClass} ${
+          context?.selectedFilter === name && "active"
+        }`}
+        onClick={() => handleClick(clickProp || name)}
+      >
+        <Icon className="nav-icon" path={icon} />
+        <div className="nav-item-text">{text || name}</div>
+      </div>
+    );
+  }
+
   return (
     <div className="general-nav">
-      <div
-        className={`nav-item all-tasks ${selectedFilter === "" && "active"}`}
-        onClick={() => handleClick("")}
-      >
-        <Icon className="nav-icon" path={mdiListBoxOutline} />
-        <div className="nav-item-text">All Tasks</div>
-      </div>
-      <div
-        className={`nav-item ${selectedFilter === "Today" && "active"}`}
-        onClick={() => handleClick("Today")}
-      >
-        <Icon className="nav-icon" path={mdiClockTimeFourOutline} />
-        <div className="nav-item-text">Today</div>
-      </div>
-      <div
-        className={`nav-item ${selectedFilter === "Overdue" && "active"}`}
-        onClick={() => handleClick("Overdue")}
-      >
-        <Icon className="nav-icon" path={mdiAlertCircleOutline} />
-        <div className="nav-item-text">Overdue</div>
-      </div>
-      <div
-        className={`nav-item ${selectedFilter === "Completed" && "active"}`}
-        onClick={() => handleClick("Completed")}
-      >
-        <Icon className="nav-icon" path={mdiCheckboxMarkedOutline} />
-        <div className="nav-item-text">Completed</div>
-      </div>
+      {createNavItem(mdiListBoxOutline, "", "", "All Tasks", "all-tasks")}
+      {createNavItem(mdiClockTimeFourOutline, "Today")}
+      {createNavItem(mdiAlertCircleOutline, "Overdue")}
+      {createNavItem(mdiCheckboxMarkedOutline, "Completed")}
     </div>
   );
 }

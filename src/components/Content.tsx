@@ -1,4 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { AppContext } from "../AppContext";
+import { AllTasksType, TaskType } from "../types";
 import Icon from "@mdi/react";
 import { mdiPlus, mdiWindowClose } from "@mdi/js";
 import Todo from "./Todo";
@@ -6,34 +8,8 @@ import { nanoid } from "nanoid";
 import "./scss/Content.scss";
 import "./scss/task-form.scss";
 
-type ContentProps = {
-  allLists: { title: string | undefined; id: string }[];
-  setAllLists: React.Dispatch<
-    React.SetStateAction<
-      {
-        title: string | undefined;
-        id: string;
-      }[]
-    >
-  >;
-  allTasks: any[];
-  setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
-  filterBy: string;
-  setFilterBy: React.Dispatch<React.SetStateAction<string>>;
-  selectedFilter: string;
-  setSelectedFilter: React.Dispatch<React.SetStateAction<string>>;
-};
-
-function Content({
-  allLists,
-  setAllLists,
-  allTasks,
-  setAllTasks,
-  filterBy,
-  setFilterBy,
-  selectedFilter,
-  setSelectedFilter,
-}: ContentProps) {
+function Content() {
+  const context = useContext(AppContext);
   const [taskFormActive, setTaskFormActive] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [showImportant, setShowImportant] = useState(false);
@@ -51,9 +27,9 @@ function Content({
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
-    setSelectedFilter("");
+    context?.setSelectedFilter("");
     if (isEdited) {
-      setAllTasks((prev) =>
+      context?.setAllTasks((prev) =>
         prev.map((item) => {
           if (taskData.id === item.id) {
             return {
@@ -72,7 +48,7 @@ function Content({
       );
       setIsEdited(false);
     } else {
-      setAllTasks((prev) => [
+      context?.setAllTasks((prev) => [
         ...prev,
         {
           id: nanoid(),
@@ -87,23 +63,15 @@ function Content({
       ]);
     }
     resetForm();
-    setFilterBy("");
+    context?.setFilterBy("");
     setTaskFormActive(false);
   }
 
   function handleTaskDelete(id: string) {
-    setAllTasks((prev) => prev.filter((task) => task.id !== id));
+    context?.setAllTasks((prev) => prev.filter((task) => task.id !== id));
   }
 
-  function handleTaskEdit(taskInfo: {
-    id: string;
-    title: string;
-    details: string;
-    date: string;
-    time: string;
-    list: string;
-    isImportant: boolean;
-  }) {
+  function handleTaskEdit(taskInfo: TaskType) {
     setTaskData(taskInfo);
     setIsEdited(true);
     setTaskFormActive(true);
@@ -122,25 +90,25 @@ function Content({
   }
 
   function displayTasks() {
-    let newArr: any[] = [];
+    let newArr: AllTasksType | undefined = [];
 
     function displayImportant() {
       if (showImportant) {
-        newArr = newArr.filter((item) => item.isImportant);
+        newArr = newArr?.filter((item) => item.isImportant);
       }
     }
 
-    switch (filterBy) {
+    switch (context?.filterBy) {
       case "":
-        newArr = [...allTasks];
+        newArr = [...context?.allTasks];
         displayImportant();
         break;
       case "Today":
-        newArr = allTasks.filter((item) => item.date === today);
+        newArr = context?.allTasks.filter((item) => item.date === today);
         displayImportant();
         break;
       case "Overdue":
-        newArr = allTasks.filter(
+        newArr = context?.allTasks.filter(
           (item) =>
             !item.isCompleted &&
             item.date !== today &&
@@ -149,15 +117,17 @@ function Content({
         displayImportant();
         break;
       case "Completed":
-        newArr = allTasks.filter((item) => item.isCompleted);
+        newArr = context?.allTasks.filter((item) => item.isCompleted);
         displayImportant();
         break;
       default:
-        newArr = allTasks.filter((item) => item.list === filterBy);
+        newArr = context?.allTasks.filter(
+          (item) => item.list === context?.filterBy
+        );
         displayImportant();
     }
 
-    return newArr.map((item) => (
+    return newArr?.map((item) => (
       <Todo
         key={item.id}
         id={item.id}
@@ -170,8 +140,6 @@ function Content({
         isCompleted={item.isCompleted}
         handleTaskDelete={handleTaskDelete}
         handleTaskEdit={handleTaskEdit}
-        allTasks={allTasks}
-        setAllTasks={setAllTasks}
       />
     ));
   }
@@ -228,7 +196,7 @@ function Content({
                 defaultValue={taskData.list || ""}
               >
                 <option value="General">General</option>
-                {allLists.map((list, index) => (
+                {context?.allLists.map((list, index) => (
                   <option key={index} value={list.title}>
                     {list.title}
                   </option>

@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useContext } from "react";
+import { AppContext } from "../AppContext";
 import Icon from "@mdi/react";
 import { mdiWindowClose } from "@mdi/js";
 import { nanoid } from "nanoid";
@@ -6,34 +7,22 @@ import "./scss/NewListForm.scss";
 
 type NewListFormProps = {
   setListFormActive: React.Dispatch<React.SetStateAction<boolean>>;
-  allLists: { title: string | undefined; id: string }[];
-  setAllLists: React.Dispatch<
-    React.SetStateAction<
-      {
-        title: string | undefined;
-        id: string;
-      }[]
-    >
-  >;
 };
 
-function NewListForm({
-  setListFormActive,
-  allLists,
-  setAllLists,
-}: NewListFormProps) {
+function NewListForm({ setListFormActive }: NewListFormProps) {
+  const context = useContext(AppContext);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const errorRef = useRef<HTMLInputElement | null>(null);
 
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     let listTitles: (string | undefined)[] = [];
-    allLists.forEach((list) => listTitles.push(list.title));
+    context?.allLists.forEach((list) => listTitles.push(list.title));
     if (errorRef.current) {
       if (listTitles.includes(inputRef.current?.value)) {
         errorRef.current.style.display = "block";
       } else {
-        setAllLists((prev) => [
+        context?.setAllLists((prev) => [
           ...prev,
           { title: inputRef.current?.value, id: nanoid() },
         ]);

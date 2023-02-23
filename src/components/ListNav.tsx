@@ -1,49 +1,28 @@
 import Icon from "@mdi/react";
 import { mdiTrashCanOutline } from "@mdi/js";
 import { nanoid } from "nanoid";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { AppContext } from "../AppContext";
 import "./scss/ListNav.scss";
 
 type ListNavProps = {
   setListFormActive: React.Dispatch<React.SetStateAction<boolean>>;
-  allLists: { title: string | undefined; id: string }[];
-  allTasks: any[];
-  setAllLists: React.Dispatch<
-    React.SetStateAction<
-      {
-        title: string | undefined;
-        id: string;
-      }[]
-    >
-  >;
-  setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
-  filterBy: string;
-  setFilterBy: React.Dispatch<React.SetStateAction<string>>;
-  selectedFilter: string;
-  setSelectedFilter: React.Dispatch<React.SetStateAction<string>>;
   handleClick: (arg0: string) => void;
 };
 
-function ListNav({
-  setListFormActive,
-  allLists,
-  allTasks,
-  setAllLists,
-  setAllTasks,
-  filterBy,
-  setFilterBy,
-  selectedFilter,
-  setSelectedFilter,
-  handleClick,
-}: ListNavProps) {
-  useEffect(() => {
-    setFilterBy(selectedFilter);
-  }, [selectedFilter]);
+function ListNav({ setListFormActive, handleClick }: ListNavProps) {
+  const context = useContext(AppContext);
 
-  const displayLists = allLists.map((list) => (
+  useEffect(() => {
+    context?.setFilterBy(context?.selectedFilter);
+  }, [context?.selectedFilter]);
+
+  const displayLists = context?.allLists.map((list) => (
     <div
       key={nanoid()}
-      className={`list-nav-item ${selectedFilter === list.title && "active"}`}
+      className={`list-nav-item ${
+        context?.selectedFilter === list.title && "active"
+      }`}
       id={list.title}
       onClick={() => handleClick(list.title ? list.title : "")}
     >
@@ -61,8 +40,8 @@ function ListNav({
   ));
 
   function handleDelete(title: string | undefined) {
-    setAllLists((prev) => prev.filter((list) => list.title !== title));
-    setAllTasks((prev) => prev.filter((task) => task.list !== title));
+    context?.setAllLists((prev) => prev.filter((list) => list.title !== title));
+    context?.setAllTasks((prev) => prev.filter((task) => task.list !== title));
   }
 
   return (
@@ -71,7 +50,9 @@ function ListNav({
         Add New List
       </button>
       <div
-        className={`list-nav-item ${selectedFilter === "General" && "active"}`}
+        className={`list-nav-item ${
+          context?.selectedFilter === "General" && "active"
+        }`}
         id="General"
         onClick={() => handleClick("General")}
       >

@@ -1,4 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
+import { AppContext } from "../AppContext";
+import { TaskType } from "../types";
 import Icon from "@mdi/react";
 import { mdiPencil, mdiTrashCanOutline } from "@mdi/js";
 import "./scss/Todo.scss";
@@ -13,18 +15,7 @@ type TodoProps = {
   isImportant: boolean;
   isCompleted: boolean;
   handleTaskDelete: (id: string) => void;
-  handleTaskEdit: (taskInfo: {
-    id: string;
-    title: string;
-    details: string;
-    date: string;
-    time: string;
-    list: string;
-    isImportant: boolean;
-    isCompleted: boolean;
-  }) => void;
-  allTasks: any[];
-  setAllTasks: React.Dispatch<React.SetStateAction<any[]>>;
+  handleTaskEdit: (taskInfo: TaskType) => void;
 };
 
 function Todo({
@@ -38,9 +29,8 @@ function Todo({
   isCompleted,
   handleTaskDelete,
   handleTaskEdit,
-  allTasks,
-  setAllTasks,
 }: TodoProps) {
+  const context = useContext(AppContext);
   const [showDetails, setShowDetails] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const todoRef = useRef<HTMLDivElement | null>(null);
@@ -64,7 +54,7 @@ function Todo({
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setIsChecked((prev) => !prev);
     if (e.target.checked) {
-      setAllTasks((prev) =>
+      context?.setAllTasks((prev) =>
         prev.map((task) => {
           if (task.id === id) {
             return { ...task, isCompleted: true };
@@ -72,7 +62,7 @@ function Todo({
         })
       );
     } else {
-      setAllTasks((prev) =>
+      context?.setAllTasks((prev) =>
         prev.map((task) => {
           if (task.id === id) {
             return { ...task, isCompleted: false };
